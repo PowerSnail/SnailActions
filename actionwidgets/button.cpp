@@ -10,17 +10,10 @@
 #include <QWidget>
 #include <cstdlib>
 
-Button::Button(const QIcon &icon, const QString &title, const char *command, QWidget *parent)
-    : ActionWidget(parent), command(command)
+Button::Button(const char *command, QWidget *parent) : ActionWidget(parent), command(command)
 {
-
-    auto iconLabel = new QLabel();
-    iconLabel->setPixmap(icon.pixmap(32, 32));
-
-    auto titleLabel = new QLabel();
-    titleLabel->setText(title);
-
     auto button = new QPushButton();
+    button->setIcon(QIcon::fromTheme("media-play"));
     auto policy = button->sizePolicy();
     policy.setHorizontalPolicy(QSizePolicy::Expanding);
     button->setSizePolicy(policy);
@@ -32,8 +25,6 @@ Button::Button(const QIcon &icon, const QString &title, const char *command, QWi
     });
 
     auto layout = new QHBoxLayout();
-    layout->addWidget(iconLabel);
-    layout->addWidget(titleLabel);
     layout->addWidget(button);
 
     this->setLayout(layout);

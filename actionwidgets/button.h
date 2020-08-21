@@ -1,6 +1,6 @@
 #pragma once
 
-#include "action.h"
+#include "actionwidget.h"
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QPushButton>
@@ -11,7 +11,7 @@ class Button : public ActionWidget
     Q_OBJECT
 
   public:
-    Button(const QIcon &icon, const QString &title, const char *command, QWidget *parent = nullptr);
+    Button(const char *command, QWidget *parent = nullptr);
 
   private:
     std::string command;

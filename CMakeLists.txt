@@ -19,12 +19,12 @@ set(SnailActions_SRC
   main.cpp
   util.cpp
   util.h
-  slider.cpp
-  slider.h
-  action.cpp
-  action.h
-  button.cpp
-  button.h
+  actionwidgets/slider.cpp
+  actionwidgets/slider.h
+  actionwidgets/actionwidget.cpp
+  actionwidgets/actionwidget.h
+  actionwidgets/button.cpp
+  actionwidgets/button.h
   mainwindow.cpp
   mainwindow.h
   mainwindow.ui

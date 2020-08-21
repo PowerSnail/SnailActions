@@ -1,7 +1,8 @@
 #pragma once
 
-#include "action.h"
+#include "actionwidgets/actionwidget.h"
 #include <QMainWindow>
+#include <QMenu>
 #include <QSystemTrayIcon>
 #include <QWidget>
 #include <vector>
@@ -21,14 +22,16 @@ class MainWindow : public QMainWindow
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void addWidget(ActionWidget *widget);
-    void showEvent(QShowEvent *e) override;
-    void focusOutEvent(QFocusEvent *e) override;
+    void addWidget(const QString iconName, const QString title, ActionWidget *widget);
 
   signals:
     void shown();
 
+  public slots:
+    void TrayTriggered(QSystemTrayIcon::ActivationReason reason);
+
   private:
     Ui::MainWindow *ui;
     QSystemTrayIcon tray;
+    QMenu contextMenu;
 };

@@ -13,16 +13,9 @@
 #include <QWidget>
 #include <cstdlib>
 
-Slider::Slider(const QIcon &icon, const QString &title, int maximum, int minimum, const char *command,
-               const char *commandGetter, QWidget *parent)
+Slider::Slider(int maximum, int minimum, const char *command, const char *commandGetter, QWidget *parent)
     : ActionWidget(parent), command(command), commandGetter(commandGetter)
 {
-
-    auto iconLabel = new QLabel();
-    iconLabel->setPixmap(icon.pixmap(32, 32));
-
-    auto titleLabel = new QLabel();
-    titleLabel->setText(title);
 
     auto slider = new QSlider();
     slider->setMaximum(maximum);
@@ -31,8 +24,6 @@ Slider::Slider(const QIcon &icon, const QString &title, int maximum, int minimum
     slider->setTracking(false);
 
     auto layout = new QHBoxLayout();
-    layout->addWidget(iconLabel);
-    layout->addWidget(titleLabel);
     layout->addWidget(slider);
 
     this->setLayout(layout);

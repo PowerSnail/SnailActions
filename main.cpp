@@ -7,29 +7,24 @@
 #include <cstdlib>
 #include <string>
 
-#include "action.h"
-#include "button.h"
+#include "actionwidgets/actionwidget.h"
+#include "actionwidgets/button.h"
+#include "actionwidgets/slider.h"
 #include "mainwindow.h"
-#include "slider.h"
 #include "util.h"
 
 ActionWidget *BuildButton(const rapidjson::Value &config)
 {
-    auto btn = new Button(QIcon::fromTheme(config["icon_name"].GetString()), // icon
-                          config["title"].GetString(),                       // title
-                          config["callback"].GetString()                     // command
-    );
+    auto btn = new Button(config["callback"].GetString());
     return btn;
 }
 
 ActionWidget *BuildSlider(const rapidjson::Value &config)
 {
-    auto slider = new Slider(QIcon::fromTheme(config["icon_name"].GetString()), // icon
-                             config["title"].GetString(),                       // title
-                             config["max"].GetInt(),                            // maximum
-                             config["min"].GetInt(),                            // minimum
-                             config["callback"].GetString(),                    // command
-                             config["value_getter"].GetString()                 // commandGetter
+    auto slider = new Slider(config["max"].GetInt(),            // maximum
+                             config["min"].GetInt(),            // minimum
+                             config["callback"].GetString(),    // command
+                             config["value_getter"].GetString() // commandGetter
     );
     return slider;
 }
@@ -62,11 +57,11 @@ int main(int argc, char *argv[])
         auto type = std::string(v["widget"].GetString(), v["widget"].GetStringLength());
         if (type == "Button")
         {
-            w.addWidget(BuildButton(v));
+            w.addWidget(v["icon_name"].GetString(), v["title"].GetString(), BuildButton(v));
         }
         else if (type == "Slider")
         {
-            w.addWidget(BuildSlider(v));
+            w.addWidget(v["icon_name"].GetString(), v["title"].GetString(), BuildSlider(v));
         }
     }
 

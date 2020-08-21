@@ -14,15 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>SnailActions</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
+   <layout class="QGridLayout" name="gridLayout"/>
   </widget>
  </widget>
  <resources/>
