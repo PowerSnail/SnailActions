@@ -2,8 +2,6 @@
 
 #include <QApplication>
 #include <QCursor>
-#include <QDesktopWidget>
-#include <QFocusEvent>
 #include <QGridLayout>
 #include <QGuiApplication>
 #include <QIcon>
@@ -66,7 +64,7 @@ void MainWindow::TrayTriggered(QSystemTrayIcon::ActivationReason reason)
         auto x = std::clamp(cursorPos.x(), screenRect.left(), screenRect.right() - rect.width());
         auto y = std::clamp(cursorPos.y(), screenRect.top(), screenRect.bottom() - rect.height());
         this->move(x, y);
-        this->setFocus();
+        this->activateWindow();
         emit this->Shown();
     }
 }
