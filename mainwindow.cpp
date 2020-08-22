@@ -57,9 +57,9 @@ void MainWindow::TrayTriggered(QSystemTrayIcon::ActivationReason reason)
 {
     if (reason == QSystemTrayIcon::Trigger)
     {
+        auto cursorPos = QCursor().pos();
         this->show();
         this->resize(1, 1); // As small as possible
-        auto cursorPos = QCursor().pos();
         auto screenRect = QGuiApplication::screenAt(cursorPos)->geometry();
         auto rect = this->geometry();
 
