@@ -16,18 +16,18 @@ find_package(RapidJSON)
 find_package(fmt)
 
 set(SnailActions_SRC
-  main.cpp
-  util.cpp
-  util.h
-  actionwidgets/slider.cpp
-  actionwidgets/slider.h
-  actionwidgets/actionwidget.cpp
-  actionwidgets/actionwidget.h
-  actionwidgets/button.cpp
-  actionwidgets/button.h
-  mainwindow.cpp
-  mainwindow.h
-  mainwindow.ui
+  src/main.cpp
+  src/util.cpp
+  src/util.h
+  src/actionwidgets/slider.cpp
+  src/actionwidgets/slider.h
+  src/actionwidgets/actionwidget.cpp
+  src/actionwidgets/actionwidget.h
+  src/actionwidgets/button.cpp
+  src/actionwidgets/button.h
+  src/mainwindow.cpp
+  src/mainwindow.h
+  src/mainwindow.ui
   res/resource.qrc
 )
 
