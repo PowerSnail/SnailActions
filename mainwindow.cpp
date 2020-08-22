@@ -8,7 +8,6 @@
 #include <QGuiApplication>
 #include <QIcon>
 #include <QLabel>
-#include <QLayout>
 #include <QMenu>
 #include <QScreen>
 #include <QSystemTrayIcon>
@@ -18,18 +17,18 @@
 #include "./ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow), tray(QIcon::fromTheme("SnailActions")), contextMenu()
+    : QMainWindow(parent), ui(new Ui::MainWindow), mTray(QIcon::fromTheme("SnailActions")), mContextMenu()
 {
     ui->setupUi(this);
     this->setWindowFlags(Qt::Sheet);
 
-    auto exitAction = contextMenu.addAction("E&xit");
-    tray.setContextMenu(&this->contextMenu);
-    tray.setToolTip("Snail Actions");
-    tray.show();
+    auto exitAction = mContextMenu.addAction("E&xit");
+    mTray.setContextMenu(&mContextMenu);
+    mTray.setToolTip("Snail Actions");
+    mTray.show();
 
-    QObject::connect(&tray, &QSystemTrayIcon::activated, this, &MainWindow::TrayTriggered);
-    QObject::connect(exitAction, &QAction::triggered, this, [=]() { QApplication::instance()->quit(); });
+    QObject::connect(&mTray, &QSystemTrayIcon::activated, this, &MainWindow::TrayTriggered);
+    QObject::connect(exitAction, &QAction::triggered, QApplication::instance(), &QApplication::quit);
 }
 
 MainWindow::~MainWindow()
@@ -51,7 +50,7 @@ void MainWindow::AddWidget(const QString iconName, const QString title, ActionWi
     layout->addWidget(iconLabel, row, 0);
     layout->addWidget(titleLabel, row, 1);
     layout->addWidget(widget, row, 2);
-    QObject::connect(this, &MainWindow::shown, widget, &ActionWidget::shown);
+    QObject::connect(this, &MainWindow::Shown, widget, &ActionWidget::Shown);
 }
 
 void MainWindow::TrayTriggered(QSystemTrayIcon::ActivationReason reason)
@@ -68,7 +67,7 @@ void MainWindow::TrayTriggered(QSystemTrayIcon::ActivationReason reason)
         auto y = std::clamp(cursorPos.y(), screenRect.top(), screenRect.bottom() - rect.height());
         this->move(x, y);
         this->setFocus();
-        emit this->shown();
+        emit this->Shown();
     }
 }
 

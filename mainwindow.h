@@ -26,13 +26,13 @@ class MainWindow : public QMainWindow
     void changeEvent(QEvent *e) override;
 
   signals:
-    void shown();
+    void Shown();
 
   public slots:
     void TrayTriggered(QSystemTrayIcon::ActivationReason reason);
 
   private:
     Ui::MainWindow *ui;
-    QSystemTrayIcon tray;
-    QMenu contextMenu;
+    QSystemTrayIcon mTray;
+    QMenu mContextMenu;
 };

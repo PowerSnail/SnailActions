@@ -2,10 +2,6 @@
 #include <QDir>
 #include <QIcon>
 #include <QStandardPaths>
-#include <cstddef>
-#include <cstdio>
-#include <cstdlib>
-#include <string>
 
 #include "actionwidgets/actionwidget.h"
 #include "actionwidgets/button.h"
@@ -36,19 +32,18 @@ int main(int argc, char *argv[])
     auto appIcon = QIcon::fromTheme("SnailActions");
     if (appIcon.isNull())
     {
-        util::panic("App Icon is Null");
+        util::Panic("App Icon is Null");
     }
     QApplication::setWindowIcon(appIcon);
 
     auto configDir = util::EnsureConfigDir();
     auto configPath = configDir.filePath("action.json").toStdString();
-    const auto config = (configDir.exists("action.json"))
-                            ? util::LoadConfig(configPath.c_str())
-                            : util::MakeDefaultConfig(configPath.c_str());
+    const auto config = (configDir.exists("action.json")) ? util::LoadConfig(configPath.c_str())
+                                                          : util::MakeDefaultConfig(configPath.c_str());
 
     if (!config.IsArray())
     {
-        util::panic("Error parsing the config.");
+        util::Panic("Error parsing the config.");
     }
 
     MainWindow w;

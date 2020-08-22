@@ -16,6 +16,6 @@ class Slider : public ActionWidget
     void showEvent(QShowEvent *e) override;
 
   private:
-    std::string command;
-    std::string commandGetter;
+    std::string mCommand;
+    std::string mCommandGetter;
 };

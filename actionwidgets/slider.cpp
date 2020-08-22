@@ -1,9 +1,5 @@
 #include "slider.h"
 
-#include <fmt/core.h>
-#include <qnamespace.h>
-#include <qslider.h>
-
 #include <QHBoxLayout>
 #include <QIcon>
 #include <QLabel>
@@ -11,10 +7,12 @@
 #include <QProcess>
 #include <QSlider>
 #include <QWidget>
+#include <QtGlobal>
 #include <cstdlib>
+#include <fmt/core.h>
 
 Slider::Slider(int maximum, int minimum, const char *command, const char *commandGetter, QWidget *parent)
-    : ActionWidget(parent), command(command), commandGetter(commandGetter)
+    : ActionWidget(parent), mCommand(command), mCommandGetter(commandGetter)
 {
 
     auto slider = new QSlider();
@@ -29,15 +27,15 @@ Slider::Slider(int maximum, int minimum, const char *command, const char *comman
     this->setLayout(layout);
 
     QObject::connect(slider, &QSlider::valueChanged, this, [=](int value) {
-        std::string command = fmt::format(this->command, fmt::arg("value", value));
+        std::string command = fmt::format(this->mCommand, fmt::arg("value", value));
         QProcess p;
         p.start("sh", QStringList() << "-c" << command.c_str());
         p.waitForFinished(-1);
     });
 
-    QObject::connect(this, &Slider::shown, this, [=]() {
+    QObject::connect(this, &Slider::Shown, this, [=]() {
         QProcess p;
-        p.start("sh", QStringList() << "-c" << this->commandGetter.c_str());
+        p.start("sh", QStringList() << "-c" << this->mCommandGetter.c_str());
         p.waitForFinished(-1);
         auto output = p.readAllStandardOutput().toInt();
         slider->setValue(output);
@@ -46,5 +44,5 @@ Slider::Slider(int maximum, int minimum, const char *command, const char *comman
 
 void Slider::showEvent(QShowEvent *e)
 {
-    emit shown();
+    emit Shown();
 }

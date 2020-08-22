@@ -14,19 +14,19 @@ QDir util::EnsureConfigDir()
     auto configPathList = QStandardPaths::standardLocations(QStandardPaths::AppConfigLocation);
     if (configPathList.isEmpty())
     {
-        util::panic("Failed to get platform config directory");
+        util::Panic("Failed to get platform config directory");
     }
 
     QDir configDir(configPathList[0]);
     if (!configDir.mkpath("."))
     {
-        util::panic("Failed to make the config directory");
+        util::Panic("Failed to make the config directory");
     }
 
     return configDir;
 }
 
-rapidjson::Document util::MakeDefaultConfig(const char* path)
+rapidjson::Document util::MakeDefaultConfig(const char *path)
 {
     rapidjson::Document d;
 

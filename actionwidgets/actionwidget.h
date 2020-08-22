@@ -10,5 +10,5 @@ class ActionWidget : public QWidget
     ActionWidget(QWidget *parent);
 
   signals:
-    void shown();
+    void Shown();
 };

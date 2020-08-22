@@ -14,5 +14,5 @@ class Button : public ActionWidget
     Button(const char *command, QWidget *parent = nullptr);
 
   private:
-    std::string command;
+    std::string mCommand;
 };

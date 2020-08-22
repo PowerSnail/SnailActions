@@ -10,7 +10,7 @@
 #include <QWidget>
 #include <cstdlib>
 
-Button::Button(const char *command, QWidget *parent) : ActionWidget(parent), command(command)
+Button::Button(const char *command, QWidget *parent) : ActionWidget(parent), mCommand(command)
 {
     auto button = new QPushButton();
     button->setIcon(QIcon::fromTheme("media-play"));
@@ -20,7 +20,7 @@ Button::Button(const char *command, QWidget *parent) : ActionWidget(parent), com
 
     QObject::connect(button, &QPushButton::clicked, this, [=]() {
         QProcess p;
-        p.start("sh", QStringList() << "-c" << this->command.c_str());
+        p.start("sh", QStringList() << "-c" << this->mCommand.c_str());
         p.waitForFinished(-1);
     });
 

@@ -9,7 +9,7 @@
 namespace util
 {
 
-template <typename... T> void panic(const char *msg, T... args)
+template <typename... T> void Panic(const char *msg, T... args)
 {
     printf(msg, args...);
     printf("\n");
