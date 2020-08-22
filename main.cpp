@@ -41,9 +41,10 @@ int main(int argc, char *argv[])
     QApplication::setWindowIcon(appIcon);
 
     auto configDir = util::EnsureConfigDir();
+    auto configPath = configDir.filePath("action.json").toStdString();
     const auto config = (configDir.exists("action.json"))
-                            ? util::LoadConfig(configDir.filePath("action.json").toStdString().c_str())
-                            : util::DefaultConfig();
+                            ? util::LoadConfig(configPath.c_str())
+                            : util::MakeDefaultConfig(configPath.c_str());
 
     if (!config.IsArray())
     {
@@ -57,15 +58,14 @@ int main(int argc, char *argv[])
         auto type = std::string(v["widget"].GetString(), v["widget"].GetStringLength());
         if (type == "Button")
         {
-            w.addWidget(v["icon_name"].GetString(), v["title"].GetString(), BuildButton(v));
+            w.AddWidget(v["icon_name"].GetString(), v["title"].GetString(), BuildButton(v));
         }
         else if (type == "Slider")
         {
-            w.addWidget(v["icon_name"].GetString(), v["title"].GetString(), BuildSlider(v));
+            w.AddWidget(v["icon_name"].GetString(), v["title"].GetString(), BuildSlider(v));
         }
     }
 
     auto result = a.exec();
-    util::SaveConfig(config, configDir.filePath("action.json").toStdString().c_str());
     return result;
 }

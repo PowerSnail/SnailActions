@@ -18,7 +18,7 @@ template <typename... T> void panic(const char *msg, T... args)
 
 QDir EnsureConfigDir();
 
-rapidjson::Document DefaultConfig();
+rapidjson::Document MakeDefaultConfig(const char *path);
 
 void SaveConfig(const rapidjson::Document &doc, const char *path);
 

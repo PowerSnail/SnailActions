@@ -26,22 +26,13 @@ QDir util::EnsureConfigDir()
     return configDir;
 }
 
-rapidjson::Document util::DefaultConfig()
+rapidjson::Document util::MakeDefaultConfig(const char* path)
 {
     rapidjson::Document d;
 
     d.SetArray();
     auto &allocator = d.GetAllocator();
 
-    {
-        rapidjson::Value v;
-        v.SetObject();
-        v.AddMember("title", "test", allocator);
-        v.AddMember("icon_name", "test", allocator);
-        v.AddMember("widget", "Button", allocator);
-        v.AddMember("callback", "true && echo test > ~/tmp/test.txt && echo 11", allocator);
-        d.PushBack(v, allocator);
-    }
     {
         rapidjson::Value v;
         v.SetObject();
@@ -64,6 +55,7 @@ rapidjson::Document util::DefaultConfig()
         d.PushBack(v, allocator);
     }
 
+    util::SaveConfig(d, path);
     return d;
 }
 

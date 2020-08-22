@@ -21,8 +21,9 @@ class MainWindow : public QMainWindow
   public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void AddWidget(const QString iconName, const QString title, ActionWidget *widget);
 
-    void addWidget(const QString iconName, const QString title, ActionWidget *widget);
+    void changeEvent(QEvent *e) override;
 
   signals:
     void shown();

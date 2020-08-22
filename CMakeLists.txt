@@ -32,13 +32,13 @@ set(SnailActions_SRC
 )
 
 if(ANDROID)
-  add_library(SnailActions SHARED
+  add_library(snail-actions SHARED
     ${SnailActions_SRC}
   )
 else()
-  add_executable(SnailActions
+  add_executable(snail-actions
     ${SnailActions_SRC}
   )
 endif()
 
-target_link_libraries(SnailActions PRIVATE Qt5::Widgets fmt)
+target_link_libraries(snail-actions PRIVATE Qt5::Widgets fmt)

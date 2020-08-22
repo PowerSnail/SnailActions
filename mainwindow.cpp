@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), tray(QIcon::fromTheme("SnailActions")), contextMenu()
 {
     ui->setupUi(this);
-    this->setWindowFlags(Qt::Tool);
+    this->setWindowFlags(Qt::Sheet);
 
     auto exitAction = contextMenu.addAction("E&xit");
     tray.setContextMenu(&this->contextMenu);
@@ -37,7 +37,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::addWidget(const QString iconName, const QString title, ActionWidget *widget)
+void MainWindow::AddWidget(const QString iconName, const QString title, ActionWidget *widget)
 {
     auto iconLabel = new QLabel();
     iconLabel->setPixmap(QIcon::fromTheme(iconName).pixmap(32, 32));
@@ -69,5 +69,13 @@ void MainWindow::TrayTriggered(QSystemTrayIcon::ActivationReason reason)
         this->move(x, y);
         this->setFocus();
         emit this->shown();
+    }
+}
+
+void MainWindow::changeEvent(QEvent *e)
+{
+    if (e->type() == QEvent::ActivationChange && !this->isActiveWindow())
+    {
+        this->hide();
     }
 }
