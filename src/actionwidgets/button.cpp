@@ -1,4 +1,4 @@
-#include "button.h"
+#include "src/actionwidgets/button.h"
 
 #include <QHBoxLayout>
 #include <QIcon>

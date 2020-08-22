@@ -3,11 +3,11 @@
 #include <QIcon>
 #include <QStandardPaths>
 
-#include "actionwidgets/actionwidget.h"
-#include "actionwidgets/button.h"
-#include "actionwidgets/slider.h"
-#include "mainwindow.h"
-#include "util.h"
+#include "src/actionwidgets/actionwidget.h"
+#include "src/actionwidgets/button.h"
+#include "src/actionwidgets/slider.h"
+#include "src/mainwindow.h"
+#include "src/util.h"
 
 ActionWidget *BuildButton(const rapidjson::Value &config)
 {

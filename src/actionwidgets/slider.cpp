@@ -1,4 +1,4 @@
-#include "slider.h"
+#include "src/actionwidgets/slider.h"
 
 #include <QHBoxLayout>
 #include <QIcon>

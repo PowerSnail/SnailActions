@@ -1,4 +1,4 @@
-#include "actionwidget.h"
+#include "src/actionwidgets/actionwidget.h"
 
 ActionWidget::ActionWidget(QWidget *parent) : QWidget(parent)
 {

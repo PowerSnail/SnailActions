@@ -1,6 +1,6 @@
 #pragma once
 
-#include "actionwidgets/actionwidget.h"
+#include "src/actionwidgets/actionwidget.h"
 #include <QMainWindow>
 #include <QMenu>
 #include <QSystemTrayIcon>
@@ -30,6 +30,7 @@ class MainWindow : public QMainWindow
 
   public slots:
     void TrayTriggered(QSystemTrayIcon::ActivationReason reason);
+    void OpenWindow();
 
   private:
     Ui::MainWindow *ui;

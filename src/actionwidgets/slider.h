@@ -1,6 +1,6 @@
 #pragma once
 
-#include "actionwidget.h"
+#include "src/actionwidgets/actionwidget.h"
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QSlider>
