@@ -14,6 +14,7 @@
 #include <QUrl>
 #include <QtDebug>
 #include <QtGlobal>
+#include <qnamespace.h>
 
 #include "./ui_mainwindow.h"
 
@@ -22,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     this->setWindowFlags(Qt::Sheet);
+    this->setWindowFlag(Qt::WindowStaysOnTopHint);
+    this->setWindowTitle("Snail Action");
 
     auto showAction = mContextMenu.addAction("&Show");
     auto openDirAction = mContextMenu.addAction("&Open configuration directory");
