@@ -1,18 +1,20 @@
 #pragma once
+#include <fmt/core.h>
 #include <rapidjson/document.h>
 #include <rapidjson/filewritestream.h>
 #include <rapidjson/writer.h>
 
 #include <QDir>
 #include <exception>
+#include <iostream>
 
 namespace util
 {
 
 template <typename... T> void Panic(const char *msg, T... args)
 {
-    printf(msg, args...);
-    printf("\n");
+    auto string = fmt::format(msg, args...);
+    std::cerr << string << std::endl;
     std::terminate();
 }
 

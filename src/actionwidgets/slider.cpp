@@ -12,37 +12,52 @@
 #include <fmt/core.h>
 
 Slider::Slider(int maximum, int minimum, const char *command, const char *commandGetter, QWidget *parent)
-    : ActionWidget(parent), mCommand(command), mCommandGetter(commandGetter)
+    : ActionWidget(parent), mCommand(command), mCommandGetter(commandGetter), mSlider(), mWaitingForValue(false)
 {
 
-    auto slider = new QSlider();
-    slider->setMaximum(maximum);
-    slider->setMinimum(minimum);
-    slider->setOrientation(Qt::Horizontal);
-    slider->setTracking(false);
+    mSlider.setMaximum(maximum);
+    mSlider.setMinimum(minimum);
+    mSlider.setOrientation(Qt::Horizontal);
+    mSlider.setTracking(false);
 
     auto layout = new QHBoxLayout();
-    layout->addWidget(slider);
+    layout->addWidget(&mSlider);
 
     this->setLayout(layout);
 
-    QObject::connect(slider, &QSlider::valueChanged, this, [=](int value) {
-        std::string command = fmt::format(this->mCommand, fmt::arg("value", value));
-        QProcess p;
-        p.start("sh", QStringList() << "-c" << command.c_str());
-        p.waitForFinished(-1);
-    });
-
-    QObject::connect(this, &Slider::Shown, this, [=]() {
-        QProcess p;
-        p.start("sh", QStringList() << "-c" << this->mCommandGetter.c_str());
-        p.waitForFinished(-1);
-        auto output = p.readAllStandardOutput().toInt();
-        slider->setValue(output);
-    });
+    QObject::connect(&mSlider, &QSlider::valueChanged, this, &Slider::SliderValueChanged);
+    QObject::connect(this, &Slider::Shown, this, &Slider::GetValue);
 }
 
 void Slider::showEvent(QShowEvent *e)
 {
     emit Shown();
+}
+
+void Slider::GetValue()
+{
+    mWaitingForValue = true;
+    auto *p = new QProcess(this);
+    p->start("sh", QStringList() << "-c" << this->mCommandGetter.c_str());
+    connect(p, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), [p, this](int, QProcess::ExitStatus) {
+        if (mWaitingForValue)
+        {
+            auto output = p->readAllStandardOutput().toInt();
+            this->mSlider.setValue(output);
+        }
+        p->setParent(nullptr);
+        delete p;
+    });
+}
+
+void Slider::SliderValueChanged(int value)
+{
+    mWaitingForValue = false;
+    std::string command = fmt::format(this->mCommand, fmt::arg("value", value));
+    auto *p = new QProcess(this);
+    p->start("sh", QStringList() << "-c" << command.c_str());
+    connect(p, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), [p, this](int, QProcess::ExitStatus) {
+        p->setParent(nullptr);
+        delete p;
+    });
 }

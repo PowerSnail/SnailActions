@@ -18,4 +18,9 @@ class Slider : public ActionWidget
   private:
     std::string mCommand;
     std::string mCommandGetter;
+    QSlider mSlider;
+    bool mWaitingForValue;
+
+    void GetValue();
+    void SliderValueChanged(int);
 };

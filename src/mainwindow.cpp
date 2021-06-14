@@ -14,7 +14,6 @@
 #include <QUrl>
 #include <QtDebug>
 #include <QtGlobal>
-#include <qnamespace.h>
 
 #include "./ui_mainwindow.h"
 
