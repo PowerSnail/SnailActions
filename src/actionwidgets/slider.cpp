@@ -36,15 +36,13 @@ void Slider::showEvent(QShowEvent *e)
 
 void Slider::GetValue()
 {
-    mWaitingForValue = true;
+    mSlider.setEnabled(false);
     auto *p = new QProcess(this);
     p->start("sh", QStringList() << "-c" << this->mCommandGetter.c_str());
     connect(p, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), [p, this](int, QProcess::ExitStatus) {
-        if (mWaitingForValue)
-        {
-            auto output = p->readAllStandardOutput().toInt();
-            this->mSlider.setValue(output);
-        }
+        auto output = p->readAllStandardOutput().toInt();
+        this->mSlider.setValue(output);
+        this->mSlider.setEnabled(true);
         p->setParent(nullptr);
         delete p;
     });
@@ -52,7 +50,6 @@ void Slider::GetValue()
 
 void Slider::SliderValueChanged(int value)
 {
-    mWaitingForValue = false;
     std::string command = fmt::format(this->mCommand, fmt::arg("value", value));
     auto *p = new QProcess(this);
     p->start("sh", QStringList() << "-c" << command.c_str());
