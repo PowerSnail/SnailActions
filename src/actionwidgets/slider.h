@@ -5,6 +5,7 @@
 #include <QLabel>
 #include <QSlider>
 #include <QWidget>
+#include <mutex>
 #include <string>
 
 class Slider : public ActionWidget
@@ -19,7 +20,7 @@ class Slider : public ActionWidget
     std::string mCommand;
     std::string mCommandGetter;
     QSlider mSlider;
-    bool mWaitingForValue;
+    std::mutex lock;
 
     void GetValue();
     void SliderValueChanged(int);
