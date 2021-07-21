@@ -42,3 +42,5 @@ else()
 endif()
 
 target_link_libraries(snail-actions PRIVATE Qt5::Widgets fmt)
+
+install(TARGETS snail-actions)
