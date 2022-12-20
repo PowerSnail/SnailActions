@@ -11,7 +11,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt6 COMPONENTS Widgets REQUIRED)
 find_package(RapidJSON)
 find_package(fmt)
 
@@ -41,6 +41,6 @@ else()
   )
 endif()
 
-target_link_libraries(snail-actions PRIVATE Qt5::Widgets fmt)
+target_link_libraries(snail-actions PRIVATE Qt6::Widgets fmt)
 
 install(TARGETS snail-actions)
