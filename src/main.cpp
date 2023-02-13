@@ -28,14 +28,6 @@ ActionWidget *BuildSlider(const rapidjson::Value &config)
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths() << ":icons");
-    auto appIcon = QIcon::fromTheme("SnailActions");
-    if (appIcon.isNull())
-    {
-        util::Panic("App Icon is Null");
-    }
-    QApplication::setWindowIcon(appIcon);
-
     auto configDir = util::EnsureConfigDir();
     auto configPath = configDir.filePath("action.json").toStdString();
     const auto config = (configDir.exists("action.json")) ? util::LoadConfig(configPath.c_str())
@@ -45,6 +37,14 @@ int main(int argc, char *argv[])
     {
         util::Panic("Error parsing the config.");
     }
+
+    QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths() << configDir.canonicalPath() << ":icons");
+    auto appIcon = QIcon::fromTheme("SnailActions");
+    if (appIcon.isNull())
+    {
+        util::Panic("App Icon is Null");
+    }
+    QApplication::setWindowIcon(appIcon);
 
     MainWindow w;
 
